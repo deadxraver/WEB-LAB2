@@ -8,12 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ребят... боюсь....</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icon.png">
 </head>
 <body>
 <header>
-    <p>Чумаченко Даниил Олегович</p>
-    <p>P3215</p>
-    <p>34564374</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">Чумаченко Даниил Олегович</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">P3215</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">34564374</p>
 </header>
 
 <table>
