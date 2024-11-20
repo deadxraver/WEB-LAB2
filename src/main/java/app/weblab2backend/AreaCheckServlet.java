@@ -58,7 +58,7 @@ public class AreaCheckServlet extends HttpServlet {
 	protected boolean validate(String x, String y, String r) {
 		boolean valid = true;
 		valid &= !x.isBlank() && !y.isBlank() && !r.isBlank();
-		valid &= checkFloat(x, "3") && checkFloat(y, "5") && checkFloat(y, "3") && checkInt(r);
+		valid &= checkFloat(x, "-3") && checkFloat(x, "3") && checkFloat(y, "-5") && checkFloat(y, "3") && checkInt(r);
 		if (!valid) return false;
 		System.out.println("Valid data");
 		this.x = Float.parseFloat(x);
@@ -74,11 +74,11 @@ public class AreaCheckServlet extends HttpServlet {
 	}
 
 	private boolean checkFloat(String num, String bound) {
-		if (num.contains(bound + ".")  && num.length() > 2) {
+		if (num.contains(bound + ".") && !num.contains("-" + bound) && num.length() > 2) {
 			char[] s = num.toCharArray();
-			for (int j = 2; j < s.length; j++) {
+			for (int j = 2 + (num.contains("-") ? 1 : 0); j < s.length; j++) {
 				if (s[j] != '0') {
-					System.err.println("Number out of bounds");
+					System.err.println("Number out of bounds: " + num);
 					return false;
 				}
 			}
