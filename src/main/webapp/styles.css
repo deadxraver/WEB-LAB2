@@ -1,0 +1,101 @@
+
+#buttob {
+    animation-name: grow;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes grow {
+    0% {
+        transform: scaleX(1.1);
+    }
+    50% {
+        transform: scaleX(5.8);
+        background: #ff0000;
+    }
+}
+
+#buttob:hover {
+    animation-play-state: paused;
+}
+
+#buttob {
+    width: 200px;
+    height: 80px;
+    background: #0015ff;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+}
+
+header {
+    font-family: serif;
+    color: rgba(13,13,145,0.35);
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+input[type="text"], select {
+    margin: 5%;
+    padding: 5px;
+}
+
+input:focus, select:focus {
+    border-color: green;
+}
+
+input[type="submit"] {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: deepskyblue;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    color: black;
+}
+
+table > tbody > tr > td {
+    background-color: #f9f9f9;
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
