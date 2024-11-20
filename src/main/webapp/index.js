@@ -23,7 +23,7 @@ function processError() {
 function sendForm(x, y) {
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:25501/WEB-LAB2-BACKEND-1.0-SNAPSHOT/controller-servlet",
+		url: window.location.href + "controller-servlet",
 		data: {x: x, y: y, r: r},
 		success: (msg) => {
 			processSuccess(msg);

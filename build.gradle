@@ -3,9 +3,6 @@ plugins {
 	id 'war'
 }
 
-group 'app'
-version '1.0-SNAPSHOT'
-
 repositories {
 	mavenCentral()
 }
