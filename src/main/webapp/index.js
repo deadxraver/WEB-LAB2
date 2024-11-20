@@ -1,8 +1,8 @@
-let x = null;
-let y = null;
-let r = 1;
+let x;
+let y;
+let r;
 let buttob;
-let canvasDrawer;
+var canvasDrawer;
 
 function checkNum(a) {
 	return !isNaN(a) && a !== null;
@@ -11,6 +11,8 @@ function checkNum(a) {
 function validateAll() {
 	if (checkNum(parseFloat(x)) && checkNum(parseFloat(y)) && checkNum(parseInt(r))) {
 		buttob.style.visibility = 'visible';
+		sessionStorage.setItem("y", y);
+		sessionStorage.setItem("r", r);
 	} else buttob.style.visibility = 'hidden';
 }
 
@@ -52,25 +54,39 @@ function processSuccess(msg) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	canvasDrawer = new CanvasDrawer();
-	canvasDrawer.redrawAll();
+	canvasDrawer = !canvasDrawer ? new CanvasDrawer() : canvasDrawer;
 	buttob = document.getElementById('buttob');
 	buttob.style.visibility = 'hidden';
-
+	x = sessionStorage.getItem("x");
+	y = sessionStorage.getItem("y");
+	r = sessionStorage.getItem("r");
+	// canvasDrawer.redrawAll(r);
+	// console.log("redrew in listener");
 	const yRadio = document.querySelectorAll(".yRadio");
 	const xText = document.getElementById("x");
 	const rSelect = document.getElementById("r");
+	console.log(`x: ${x} y: ${y} r: ${r}`);
+
+	xText.value = x === null ? "" : x;
+	if (!r) r = 1;
+	rSelect.value = r;
 
 	rSelect.addEventListener("change", (e) => {
 		r = e.target.value;
+		sessionStorage.setItem("r", r);
 		validateAll();
 		canvasDrawer.redrawAll(r);
 	})
 
 	yRadio.forEach(e => {
+		if (e.value === sessionStorage.getItem("y")) {
+			e.checked = true;
+			y = sessionStorage.getItem("y");
+		}
 		e.addEventListener("change", function (event) {
 			if(event.target.checked) {
 				y = event.target.value;
+				sessionStorage.setItem("y", y);
 			}
 			validateAll();
 		});
@@ -97,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			x = x.substring(1);
 		}
 		xText.value = x;
+		sessionStorage.setItem("x", x);
 		validateAll();
 	});
 
@@ -104,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (validate()) sendForm(x, y);
 		else alert("Проверьте корректность введенных значений");
 	});
+	validateAll();
 });
 
 

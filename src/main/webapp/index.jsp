@@ -12,9 +12,12 @@
 </head>
 <body>
 <header>
-    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">Чумаченко Даниил Олегович</p>
-    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">P3215</p>
-    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">34564374</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">
+        Чумаченко Даниил Олегович</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">
+        P3215</p>
+    <p style="color:rgb(<%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>, <%=(int)(Math.random() * 255)%>)">
+        34564374</p>
 </header>
 
 <table>
@@ -45,11 +48,22 @@
         <td>R</td>
         <td>
             <label for="r"></label><select id="r" name="r">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <% if (request.getSession().getAttribute("r") == null) request.getSession().setAttribute("r", "1"); %>
+            <option <%= request.getSession().getAttribute("r").equals("1") ? "selected=\"selected\"" : "" %> value="1">
+                1
+            </option>
+            <option <%= request.getSession().getAttribute("r").equals("2") ? "selected=\"selected\"" : "" %> value="2">
+                2
+            </option>
+            <option <%= request.getSession().getAttribute("r").equals("3") ? "selected=\"selected\"" : "" %> value="3">
+                3
+            </option>
+            <option <%= request.getSession().getAttribute("r").equals("4") ? "selected=\"selected\"" : "" %> value="4">
+                4
+            </option>
+            <option <%= request.getSession().getAttribute("r").equals("5") ? "selected=\"selected\"" : "" %> value="5">
+                5
+            </option>
         </select>
         </td>
     </tr>
@@ -78,7 +92,8 @@
     </thead>
     <tbody id="resultsBody">
     <%
-        LinkedList<Response> dots = (LinkedList<Response>) request.getSession().getAttribute("dots");
+        Object o = request.getSession().getAttribute("dots");
+        LinkedList<Response> dots = o == null ? new LinkedList<>() : (LinkedList<Response>) o;
         if (dots != null) {
             for (Response rp : dots) {
     %>
@@ -105,5 +120,26 @@
 <script src="libs/jquery.min.js"></script>
 <script src="index.js"></script>
 <script src="CanvasDrawer.js"></script>
+<script>
+	canvasDrawer = !canvasDrawer ? new CanvasDrawer() : canvasDrawer;
+	let dot;
+	<%
+	o = request.getSession().getAttribute("dots");
+	dots = o == null ? new LinkedList<>( ) : (LinkedList<Response>) o;
+	for (Response rp : dots) {%>
+	if (!canvasDrawer.dots) canvasDrawer.dots = [];
+	dot = <%=rp%>;
+	if (dot) {
+		dot.x = dot.x.replace(',', '.');
+		dot.y = dot.y.replace(',', '.');
+		canvasDrawer.dots.push(dot);
+	}
+	<% }%>
+	console.log(canvasDrawer.dots);
+	r = sessionStorage.getItem("r");
+	r = r ? r : 1;
+	canvasDrawer.redrawAll(r);
+	console.log("redrew in doc", r);
+</script>
 </body>
 </html>

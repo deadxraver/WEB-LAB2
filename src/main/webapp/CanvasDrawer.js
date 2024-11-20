@@ -7,9 +7,11 @@ class CanvasDrawer {
 	COLOR_RED = "#ff0000"
 	COLOR_GREEN = "#00ff00"
 	totalPoints = 12;
+	dots = [];
 	pointInPixels = this.SIZE / this.totalPoints;
 
 	constructor() {
+		console.log(sessionStorage.getItem("dots"));
 		this.canvas = document.getElementById("canvas");
 		this.ctx = this.canvas.getContext("2d");
 		this.ctx.font = `${this.TEXT_SIZE}px Soyuz Grotesk`;
@@ -38,6 +40,9 @@ class CanvasDrawer {
 		this.drawAxes();
 		this.setPointerAtDot(5);
 		this.setPointerAtDot(1);
+		this.dots.forEach(e => {
+			this.drawPoint(e.x, e.y, e.hit && (e.hit !== "Нет("), false);
+		});
 	}
 
 	drawAxes() {
@@ -115,8 +120,9 @@ class CanvasDrawer {
 		this.ctx.stroke();
 	}
 
-	drawPoint(x, y, success) {
+	drawPoint(x, y, success, push=true) {
 		console.log(`drawPoint: x = ${x}, y = ${y}`);
+		if (push) this.dots.push({"x": x, "y": y, "hit": success});
 		this.ctx.fillStyle = success
 			? this.COLOR_GREEN
 			: this.COLOR_RED;
